@@ -20,16 +20,20 @@ def add_watermark():
     try:
         global file_path, img, canvas
         watermark = watermark_text.get()
-        img = Image.open(file_path)
+        img = Image.open(file_path).convert("RGBA")
         d = ImageDraw.Draw(img)
         print(watermark)
         fnt = ImageFont.truetype("arial.ttf", int(font_size.get()))
-        d.text((int(x_entry.get()), int(y_entry.get())), watermark, fill=color_picker[1], font=fnt)
+        d.text((int(x_entry.get()), int(y_entry.get())), watermark, font=fnt, fill=(255, 255, 255, int(alpha_input.get())))
         img.save(f"watermarked.png", quality=95)
-        img = ImageTk.PhotoImage(Image.open('watermarked.png').resize((300, 300)))
+        img = ImageTk.PhotoImage(Image.open('watermarked.png').convert("RGBA").resize((300, 300)))
         canvas.create_image(0, 0, anchor=NW, image=img)
     except:
-        messagebox.showerror("Error", "Please Select Image")
+        messagebox.showerror("Error", "Something Went Wrong")
+
+def color_picker_():
+    global color_picker
+    color_picker = tkinter.colorchooser.askcolor(title="choose a color for watermark")
 
 
 select_image_button = Button(text="Select Image", command=select_image, width=40)
@@ -63,16 +67,15 @@ watermark_text = Entry(window)
 watermark_text.grid(row=3, column=3)
 
 submit_text = Button(text='Add Watermark', command=add_watermark)
-submit_text.grid(row=4, column=3, padx=5)
+submit_text.grid(row=5, column=3, padx=5)
 
-
-def color_picker_():
-    global color_picker
-    color_picker = tkinter.colorchooser.askcolor(title="choose a color for watermark")
-
+label_alpha = Label(text="Set Alpha:")
+label_alpha.grid(row=4, column=2)
+alpha_input = Entry()
+alpha_input.grid(row=4, column=3)
 
 color_picker = ["", "#000000"]
 color_picker_button = Button(text="Choose color", command=color_picker_)
-color_picker_button.grid(row=4, column=2)
+color_picker_button.grid(row=5, column=2)
 
 window.mainloop()
