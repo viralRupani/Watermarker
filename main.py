@@ -72,6 +72,7 @@ submit_text.grid(row=5, column=3, padx=5)
 label_alpha = Label(text="Set Alpha:")
 label_alpha.grid(row=4, column=2)
 alpha_input = Entry()
+alpha_input.insert(0, 250)
 alpha_input.grid(row=4, column=3)
 
 color_picker = ["", "#000000"]
