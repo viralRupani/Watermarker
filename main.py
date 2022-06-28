@@ -24,7 +24,7 @@ def add_watermark():
         d = ImageDraw.Draw(img)
         print(watermark)
         fnt = ImageFont.truetype("arial.ttf", int(font_size.get()))
-        d.text((int(x_entry.get()), int(y_entry.get())), watermark, font=fnt, fill=(255, 255, 255, int(alpha_input.get())))
+        d.text((int(x_entry.get()), int(y_entry.get())), watermark, font=fnt, fill=(color_picker[0][0], color_picker[0][1], color_picker[0][2], int(alpha_input.get())))
         img.save(f"watermarked.png", quality=95)
         img = ImageTk.PhotoImage(Image.open('watermarked.png').convert("RGBA").resize((300, 300)))
         canvas.create_image(0, 0, anchor=NW, image=img)
@@ -72,10 +72,10 @@ submit_text.grid(row=5, column=3, padx=5)
 label_alpha = Label(text="Set Alpha:")
 label_alpha.grid(row=4, column=2)
 alpha_input = Entry()
-alpha_input.insert(0, 250)
+alpha_input.insert(0, "250")
 alpha_input.grid(row=4, column=3)
 
-color_picker = ["", "#000000"]
+color_picker = [(255, 255, 255)]
 color_picker_button = Button(text="Choose color", command=color_picker_)
 color_picker_button.grid(row=5, column=2)
 
